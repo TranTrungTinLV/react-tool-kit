@@ -1,35 +1,31 @@
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import {
+    createSlice
+} from '@reduxjs/toolkit';
 
-export const increment = createAction('increment/counter');
-export const decrement = createAction('decrement/counter');
-export const increaseAmount = createAction('increaseByAmount/counter')
+//initialState
+const initialState = {
+    value: 0
+}
+export const counterSlices = createSlice({
+    name: 'counter', //tên đại diện cho 1 cái Slice cụ thể
+    initialState, //trạng thái ban đầu
+    reducers: {
+        increament: (state, action) => {
+            state.value++;
 
-//reducers
+        },
+        decrement: (state, action) => {
+            state.value--;
 
-const initialState = { value: 0 }
-
-//1. using builder callback notation
-// export const counterSlices = createReducer(initialState, (builder) => {
-//     builder.addCase(increment, (state, action) => {
-//         state.value++;
-//     });
-//     builder.addCase(decrement, (state, action) => {
-//         state.value--;
-//     })
-//     builder.addCase(increaseAmount, (state, action) => {
-//         state.value += action.payload
-//     })
-// })
-
-//2. using map object notation
-export const counterSlices = createReducer(initialState, {
-    [increment]: (state, action) => {
-        state.value++;
-    },
-    [decrement]: (state, action) => {
-        state.value--;
-    },
-    [increaseAmount]: (state, action) => {
-        state.value += action.payload;
+        },
     }
-})
+});
+
+//generate action creator
+export const {
+    increament,
+    decrement
+} = counterSlices.actions;
+
+//expoert reducers
+export default counterSlices.reducer;
